@@ -1,13 +1,14 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.2
-on:
-  push:
-    branches:
-      - main
+
 jobs:
   build:
     executor: node/default
+    when:
+      branch: main
+      event:
+        - pull_request
     steps:
       - checkout
       - restore_cache:
