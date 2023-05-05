@@ -1,0 +1,15 @@
+.login-wrapper {
+  @apply flex justify-center items-center w-full h-screen;
+}
+.login-container {
+  @apply bg-light-silver rounded-xl shadow-form flex flex-row overflow-hidden;
+}
+.login-figure {
+  @apply bg-primary h-full flex flex-col px-14 py-14 justify-center items-center text-center text-white tracking-[0.135em];
+}
+.login-form {
+  @apply flex flex-col justify-center items-center px-12;
+}
+.login-btn {
+  @apply px-20 py-3 text-lg	font-normal mt-10 tracking-[0.235em];
+}

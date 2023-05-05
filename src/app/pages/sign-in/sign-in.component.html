@@ -1,61 +1,77 @@
-<div class="displayTable">
-  <div class="displayTableCell">
-    <div class="authBlock">
-      <h3>Sign In</h3>
-      <div class="formGroup">
-        <input
-          type="text"
-          class="formControl"
-          placeholder="Username"
-          #userName
-          required
-        />
-      </div>
-      <div class="formGroup">
-        <input
-          type="password"
-          class="formControl"
-          placeholder="Password"
-          #userPassword
-          required
-        />
-      </div>
-      <!-- Calling SignIn Api from AuthService -->
-      <div class="formGroup">
-        <input
-          type="button"
-          class="btn btnPrimary"
-          value="Log in"
-          (click)="authService.SignIn(userName.value, userPassword.value)"
-        />
-      </div>
-      <div class="formGroup">
-        <span class="or"><span class="orInner">Or</span></span>
-      </div>
-      <!-- Calling GoogleAuth Api from AuthService -->
-      <div class="formGroup">
-        <button
-          type="button"
-          class="btn googleBtn"
-          (click)="authService.GoogleAuth()"
-        >
-          <i class="fab fa-google-plus-g"></i>
-          Log in with Google
-        </button>
-      </div>
-      <div class="forgotPassword">
-        <span routerLink="/forgot-password">Forgot Password?</span>
-      </div>
+<div class="login-wrapper">
+  <div class="login-container">
+    <div class="login-figure">
+      <img src="../../../assets/figures/chef.png" />
+      <h2 class="font-light text-4xl mt-6 tracking-[0.335em]">Welcome</h2>
+      <p class="font-normal text-sm mt-2 tracking-[0.235em]">
+        Share your passion for cooking<br />
+        with the world!
+      </p>
     </div>
-    <div class="redirectToLogin">
-      <span
-        >Don't have an account?<span
-          class="redirect"
-          routerLink="/register-user"
-        >
-          Sign Up</span
-        ></span
+    <div class="login-form">
+      <h1
+        class="text-4xl text-dark-silver font-semibold tracking-[0.235em] my-10"
       >
+        CookBook
+      </h1>
+      <input
+        class="w-96 h-14 bg-light-silver focus:bg-light-silver focus:text-dark-silver border-primary border rounded-xl text-dark-silver px-3 py-5"
+        type="text"
+        placeholder="Email Address"
+        #email
+        required
+      />
+      <input
+        class="w-96 h-14 mt-7 bg-light-silver focus:bg-light-silver focus:text-dark-silver border-primary border rounded-xl text-dark-silver px-3 py-5"
+        type="password"
+        placeholder="Password"
+        #password
+        required
+      />
+      <div class="w-full flex justify-end">
+        <a
+          class="text-primary no-underline hover:underline text-xs font-medium text-right mt-2"
+          routerLink="/forgot-password"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          >Forgot Password?</a
+        >
+      </div>
+      <button
+        class="login-btn"
+        (click)="authService.SignIn(email.value, password.value)"
+      >
+        Log In
+      </button>
+
+      <div class="flex items-center justify-center w-full my-10">
+        <div class="border-b border-dark-silver w-20 inline-block"></div>
+        <div class="mx-4 text-dark-silver">or</div>
+        <div class="border-b border-dark-silver w-20 inline-block"></div>
+      </div>
+
+      <a
+        outerLink=""
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        (click)="authService.GoogleAuth()"
+        class="hover:underline hover:cursor-pointer mb-11 flex flex-row gap-2 justify-center items-center w-full text-xs text-medium text-dark tracking-[0.235em]"
+      >
+        <img src="../../../assets/icons/google.png" />
+        Sign in with Google</a
+      >
+
+      <span class="text-dark text-sm font-medium"
+        >New Here?
+        <a
+          class="text-primary no-underline hover:underline"
+          routerLink="/sign-up"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+        >
+          Create Account
+        </a>
+      </span>
     </div>
   </div>
 </div>
