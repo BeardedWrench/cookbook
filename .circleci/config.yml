@@ -4,10 +4,6 @@ orbs:
 
 jobs:
   build:
-    filters:
-      branches:
-        only:
-          - main
     executor: node/default
     steps:
       - checkout
