@@ -1,34 +1,42 @@
 version: 2.1
 orbs:
-  browser-tools: circleci/browser-tools@1.2.3
+  node: circleci/node@5.0.2
+  heroku: circleci/heroku@1.2.6
+
 jobs:
-  build:
-    working_directory: ~/ng-project
-    docker:
-      - image: cimg/node:16.13.1-browsers
+  build_and_test:
+    executor: node/default
     steps:
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
-      - run:
-          command: |
-            google-chrome --version
-            chromedriver --version
-          name: Check install
       - checkout
-      - restore_cache:
-          key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      - run: npm install
-      - run: npm install --save-dev firebase-tools
-      - save_cache:
-          key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-          paths:
-            - "node_modules"
+      - node/install-packages:
+          pkg-manager: npm
       - run:
-          name: "Run test"
           command: npm run test
+          name: Run tests
       - run:
-          name: "Build application for production"
           command: npm run build
+          name: Build app
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+  deploy:
+    machine: true
+    steps:
+      - checkout
       - run:
-          name: "Deploy app to Firebase Hosting"
-          command: "./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN"
+          name: Install Firebase CLI
+          command: npm install -g firebase-tools
+      - run:
+          name: Firebase Deploy
+          command: firebase deploy --token=$FIREBASE_TOKEN
+workflows:
+  test_my_app:
+    jobs:
+      - build_and_test
+      - deploy:
+          requires:
+            - build_and_test # only deploy if the build_and_test job has completed
+          filters:
+            branches:
+              only: main # only deploy when on main
