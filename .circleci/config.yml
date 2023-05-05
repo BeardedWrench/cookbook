@@ -4,6 +4,10 @@ orbs:
 
 jobs:
   build:
+    filters:
+      branches:
+        only:
+          - main
     executor: node/default
     steps:
       - checkout
@@ -25,10 +29,3 @@ jobs:
       - run:
           name: "Deploy app to Firebase Hosting"
           command: "./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN"
-    filters:
-      branches:
-        only:
-          - main
-      pull_requests:
-        only:
-          - main
