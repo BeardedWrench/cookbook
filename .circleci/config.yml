@@ -22,8 +22,5 @@ jobs:
           paths:
             - .
       - run:
-          name: Install Firebase CLI
-          command: npm install -g firebase-tools
-      - run:
-          name: Firebase Deploy
-          command: firebase deploy --token=$FIREBASE_TOKEN
+          name: "Deploy app to Firebase Hosting"
+          command: "./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN"
