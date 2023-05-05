@@ -9,8 +9,7 @@ jobs:
       - checkout
       - restore_cache:
           key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      - node/install-packages:
-          pkg-manager: npm
+      - run: npm install
       - save_cache:
           key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
