@@ -15,7 +15,7 @@ jobs:
             chromedriver --version
           name: Check install
       - checkout
-          path: ~/cookbook
+            path: ~/cookbook
       - restore_cache:
           key: cookbook-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run: npm install
