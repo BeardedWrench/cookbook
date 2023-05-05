@@ -11,21 +11,25 @@ jobs:
     executor: node/default
     steps:
       - checkout
-      - restore_cache:
-          key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      - run: npm install --legacy-peer-deps
-      - run: npm install --save-dev firebase-tools --legacy-peer-deps
-      - save_cache:
-          key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-          paths:
-            - "node_modules"
-      - run:
-          command: npm run build
-          name: Build app
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - .
-      - run:
-          name: "Deploy app to Firebase Hosting"
-          command: "./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN"
+      - when:
+          condition:
+            equal: [main, << pipeline.git.branch >>]
+          steps:
+            - restore_cache:
+                key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - run: npm install --legacy-peer-deps
+            - run: npm install --save-dev firebase-tools --legacy-peer-deps
+            - save_cache:
+                key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
+                paths:
+                  - "node_modules"
+            - run:
+                command: npm run build
+                name: Build app
+            - persist_to_workspace:
+                root: ~/project
+                paths:
+                  - .
+            - run:
+                name: "Deploy app to Firebase Hosting"
+                command: "./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN"
