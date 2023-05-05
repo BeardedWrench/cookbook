@@ -14,9 +14,10 @@ jobs:
           key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
             - "node_modules"
-      - run:
-          command: npm run test
-          name: Run tests
+      # Add back in once tests are created
+      # - run:
+      #     command: npm run test
+      #     name: Run tests
       - run:
           command: npm run build
           name: Build app
@@ -35,7 +36,7 @@ jobs:
           name: Firebase Deploy
           command: firebase deploy --token=$FIREBASE_TOKEN
 workflows:
-  test_my_app:
+  build_and_deploy:
     jobs:
       - build_and_test
       - deploy:
