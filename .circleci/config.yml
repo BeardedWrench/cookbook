@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@5.0.2
 
 jobs:
-  build_and_test:
+  build:
     executor: node/default
     steps:
       - checkout
@@ -27,3 +27,7 @@ jobs:
           name: Firebase Deploy
           command: firebase deploy --token=$FIREBASE_TOKEN
             - .
+workflows:
+  build_and_deploy:
+    jobs:
+      - build
